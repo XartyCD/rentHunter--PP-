@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
-function App() {
+import { AppProvider } from "./contexts/context.js"
+
+import LoginPage from "./components/LoginPage.js"
+import MainPage from "./components/MainPage.js"
+import RegisterPage from "./components/RegisterPage.js"
+import WelcomePage from "./components/WelcomePage.js"
+
+import AccountPage from "./components/privateComponents/AccountPage.js"
+import YourPosts from "./components/privateComponents/YourPosts.js"
+import PopupChat from "./components/privateComponents/PopupChat.js"
+
+import PublicRoute from "./utils/PublicRoute.js"
+
+import "./styles/App.css"
+
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      <Router>
+        <AppProvider>
+          <Routes>
+            <Route element={<PublicRoute />}>
+              <Route path="/" element={<WelcomePage />} />
+            </Route>
+            <Route element={<PublicRoute />}>
+              <Route path="/register" element={<RegisterPage />} />
+            </Route>
+            <Route element={<PublicRoute />}>
+              <Route path="/login" element={<LoginPage />} />
+            </Route>
+            <Route element={<PublicRoute />}>
+              <Route path="/main" element={<MainPage />} />
+            </Route>
+            <Route element={<PublicRoute />}>
+              <Route path="/welcome" element={<WelcomePage />} />
+            </Route>
 
-export default App;
+            <Route path="/yourposts" element={<YourPosts />} />
+            <Route path="/account" element={<AccountPage />} />
+          </Routes>
+        </AppProvider>
+      </Router>
+    </div>
+  )
+}
